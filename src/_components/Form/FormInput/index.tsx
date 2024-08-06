@@ -1,17 +1,27 @@
 import React from "react";
 import "./formInput.css";
 
-type InputTextareaHTMLParams = React.HTMLAttributes<HTMLInputElement> &
-  React.HTMLAttributes<HTMLTextAreaElement>;
+type InputHTMLParams = React.InputHTMLAttributes<HTMLInputElement>;
+type TextareaHTMLParams = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-interface InputProps {
+interface BaseInputProps {
   htmlFor: string;
   label: string;
-  textarea: boolean;
-  params: InputTextareaHTMLParams;
 }
 
-const FormInput = ({ htmlFor, label, textarea, params }: InputProps) => {
+interface TextareaProps extends BaseInputProps {
+  textarea: true;
+  params: TextareaHTMLParams;
+}
+
+interface InputProps extends BaseInputProps {
+  textarea: false;
+  params: InputHTMLParams;
+}
+
+type FormInputProps = TextareaProps | InputProps;
+
+const FormInput = ({ htmlFor, label, textarea, params }: FormInputProps) => {
   return (
     <div className="form-controll">
       <label htmlFor={htmlFor} className="form-label">
