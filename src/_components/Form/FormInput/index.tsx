@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, Ref } from "react";
 import "./formInput.css";
 
 type InputHTMLParams = React.InputHTMLAttributes<HTMLInputElement>;
@@ -15,25 +15,32 @@ interface TextareaProps extends BaseInputProps {
 }
 
 interface InputProps extends BaseInputProps {
-  textarea: false;
+  textarea?: false;
   params: InputHTMLParams;
 }
 
 type FormInputProps = TextareaProps | InputProps;
 
-const FormInput = ({ htmlFor, label, textarea, params }: FormInputProps) => {
+const FormInput = forwardRef<
+  HTMLTextAreaElement | HTMLInputElement,
+  FormInputProps
+>(({ htmlFor, label, textarea, params }, ref) => {
   return (
     <div className="form-controll">
       <label htmlFor={htmlFor} className="form-label">
         {label}
       </label>
       {textarea ? (
-        <textarea id={htmlFor} {...params} />
+        <textarea
+          id={htmlFor}
+          ref={ref as Ref<HTMLTextAreaElement>}
+          {...params}
+        />
       ) : (
-        <input id={htmlFor} {...params} />
+        <input id={htmlFor} ref={ref as Ref<HTMLInputElement>} {...params} />
       )}
     </div>
   );
-};
+});
 
 export default FormInput;
