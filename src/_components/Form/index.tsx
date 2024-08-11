@@ -2,34 +2,43 @@ import FormInput from "./FormInput";
 import Button from "./Button";
 import React, { useRef } from "react";
 
-const Form = () => {
+interface FormProps {
+  onFormSubmit: (data: FormData) => void;
+}
+
+interface FormData {
+  title: string;
+  description: string;
+  people: number;
+}
+
+const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const peopleRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
+    const form = event.target as HTMLFormElement;
     const titleVal: string = titleRef.current!.value;
     const descriptionVal: string = descriptionRef.current!.value;
     const peopleVal: number = parseInt(peopleRef.current!.value, 10);
 
-    const newTask: {
-      title: string;
-      description: string;
-      people: number;
-    } = {
-      title: titleVal,
-      description: descriptionVal,
+    const newTask: FormData = {
+      title: titleVal.trim(),
+      description: descriptionVal.trim(),
       people: peopleVal,
     };
 
-    console.log(newTask);
+    onFormSubmit(newTask);
+
+    form.reset();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="user-input" onSubmit={handleSubmit}>
       <FormInput
         htmlFor="title"
         label="Title"
