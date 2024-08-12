@@ -1,15 +1,11 @@
+import React, { useRef } from "react";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import React, { useRef } from "react";
+import { ProjectInput, Validatable } from "../../_utils/interfaces.ts";
+import { validate } from "../../_utils/validate.ts";
 
 interface FormProps {
-  onFormSubmit: (data: FormData) => void;
-}
-
-interface FormData {
-  title: string;
-  description: string;
-  people: number;
+  onFormSubmit: (data: ProjectInput) => void;
 }
 
 const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
@@ -22,17 +18,45 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
     event.stopPropagation();
 
     const form = event.target as HTMLFormElement;
-    const titleVal: string = titleRef.current!.value;
-    const descriptionVal: string = descriptionRef.current!.value;
-    const peopleVal: number = parseInt(peopleRef.current!.value, 10);
 
-    const newTask: FormData = {
-      title: titleVal.trim(),
-      description: descriptionVal.trim(),
-      people: peopleVal,
+    const titleVal = titleRef.current!.value;
+    const descriptionVal = descriptionRef.current!.value;
+    const peopleVal = parseInt(peopleRef.current!.value, 10);
+
+    const titleValidatable: Validatable = {
+      value: titleVal,
+      required: true,
     };
 
-    onFormSubmit(newTask);
+    const descriptionValidatable: Validatable = {
+      value: descriptionVal,
+      required: true,
+      minLength: 5,
+    };
+
+    const peopleValidatable: Validatable = {
+      value: peopleVal,
+      required: true,
+      min: 0,
+      max: 10,
+    };
+
+    if (
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
+    ) {
+      alert("Please enter Valid input");
+      return;
+    } else {
+      const newProject: ProjectInput = {
+        title: titleVal.trim(),
+        description: descriptionVal.trim(),
+        people: peopleVal,
+      };
+
+      onFormSubmit(newProject);
+    }
 
     form.reset();
   };
@@ -47,7 +71,6 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
           type: "text",
           id: "title",
           placeholder: "Name your task",
-          required: true,
         }}
       />
 
@@ -60,7 +83,6 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
           id: "description",
           rows: 3,
           placeholder: "Enter description",
-          required: true,
         }}
       />
 
@@ -74,8 +96,6 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
           step: 1,
           min: 0,
           max: 10,
-          defaultValue: 0,
-          required: true,
         }}
       />
 
