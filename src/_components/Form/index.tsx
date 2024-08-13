@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import "./form.css";
 import FormInput from "./FormInput";
 import Button from "./Button";
 import { ProjectInput, Validatable } from "../../_utils/interfaces.ts";
@@ -96,6 +97,7 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
           step: 1,
           min: 0,
           max: 10,
+          defaultValue: 0,
         }}
       />
 
