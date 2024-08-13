@@ -1,20 +1,22 @@
-label,
-input,
-textarea {
-    display: block;
-    margin: 0.5rem 0;
+.form-control {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    gap: 8px;
 }
 
-label {
+.form-control:has(input[type=number]) {
+    max-width: max-content;
+}
+
+.form-label {
     font-weight: bold;
 }
 
 input,
 textarea {
     font: inherit;
-    padding: 0.2rem 0.4rem;
-    width: 100%;
-    max-width: 30rem;
+    padding: 12px;
     border: 1px solid #ccc;
 }
 
