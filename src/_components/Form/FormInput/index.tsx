@@ -26,7 +26,7 @@ const FormInput = forwardRef<
   FormInputProps
 >(({ htmlFor, label, textarea, params }, ref) => {
   return (
-    <div className="form-controll">
+    <div className="form-control">
       <label htmlFor={htmlFor} className="form-label">
         {label}
       </label>
