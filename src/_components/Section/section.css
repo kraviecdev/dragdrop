@@ -1,0 +1,41 @@
+.section {
+    margin: 1rem;
+    border: 1px solid;
+}
+
+.section header {
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section header h2 {
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+}
+
+.section--active {
+    border-color: #ff0062;
+}
+
+.section--active header {
+    background: #ff0062;
+}
+
+.section--active li h2 {
+    color: #ff0062;
+}
+
+.section--finished {
+    border-color: #0044ff;
+}
+
+.section--finished header {
+    background: #0044ff;
+}
+
+.section--finished li h2 {
+    color: #0044ff;
+}
