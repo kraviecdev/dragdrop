@@ -1,0 +1,18 @@
+li {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+    margin: 1rem;
+}
+
+li h2 {
+    margin: 0.5rem 0;
+}
+
+li h3 {
+    color: #575757;
+    font-size: 1rem;
+}
+
+li p {
+    margin: 0;
+}
