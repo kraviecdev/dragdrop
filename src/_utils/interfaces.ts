@@ -8,7 +8,9 @@ export interface Validatable {
 }
 
 export interface ProjectInput {
+  id: string;
   title: string;
   description: string;
   people: number;
+  isActive: boolean;
 }
