@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { nanoid } from "nanoid";
 import "./form.css";
 import FormInput from "./FormInput";
 import Button from "./Button";
@@ -51,9 +52,11 @@ const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
       return;
     } else {
       const newProject: ProjectInput = {
+        id: nanoid(),
         title: titleVal.trim(),
         description: descriptionVal.trim(),
         people: peopleVal,
+        isActive: true,
       };
 
       onFormSubmit(newProject);
