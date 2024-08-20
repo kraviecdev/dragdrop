@@ -2,11 +2,11 @@ import React from "react";
 import "./section.css";
 
 interface SectionProps {
-  modifier?: string;
   children: React.ReactNode;
+  modifier?: string;
 }
 
-const Section = ({ modifier, children }: SectionProps) => {
+const Section = ({ children, modifier }: SectionProps) => {
   return (
     <section className={`section ${modifier && "section--" + modifier}`}>
       <header>
