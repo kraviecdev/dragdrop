@@ -14,11 +14,3 @@ main {
   max-width: 1024px;
   margin: 0 auto;
 }
-
-.droppable {
-  background: #ffe3ee;
-}
-
-#finished-projects .droppable {
-  background: #d6e1ff;
-}

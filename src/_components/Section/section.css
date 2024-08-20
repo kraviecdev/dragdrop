@@ -28,6 +28,10 @@
     color: #ff0062;
 }
 
+.section--active ul.droppable {
+    background: #ffe3ee;
+}
+
 .section--finished {
     border-color: #0044ff;
 }
@@ -38,4 +42,8 @@
 
 .section--finished li h2 {
     color: #0044ff;
+}
+
+.section--finished ul.droppable {
+    background: #d6e1ff;
 }
