@@ -1,12 +1,24 @@
-import { ProjectInput } from "../../../_utils/interfaces.ts";
 import "./listItem.css";
+import React from "react";
 
-const ListItem = ({ title, description, people }: ProjectInput) => {
+interface ListItemProps {
+  title: string;
+  description: string;
+  people: number;
+  dragStartHandler?: (event: React.DragEvent) => void;
+}
+
+const ListItem = ({
+  title,
+  description,
+  people,
+  dragStartHandler,
+}: ListItemProps) => {
   return (
-    <li>
+    <li onDragStart={dragStartHandler} draggable>
       <h2>{title}</h2>
-      <h3>{description}</h3>
-      <p>{people}</p>
+      <h3>{`${people} ${people === 1 ? "Person" : "Persons"} assigned`}</h3>
+      <p>{description}</p>
     </li>
   );
 };
