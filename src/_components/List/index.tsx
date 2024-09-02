@@ -5,10 +5,11 @@ import React, { useState } from "react";
 
 interface ListProps {
   items: ProjectInput[];
-  onItemDrop: (item: ProjectInput) => void;
+  onItemDrop: (item: ProjectInput, targetList: "active" | "finished") => void;
+  targetList: "active" | "finished";
 }
 
-const List = ({ items, onItemDrop }: ListProps) => {
+const List = ({ items, onItemDrop, targetList }: ListProps) => {
   const [draggedOver, setDraggedOver] = useState(false);
 
   const onDragOver = (event: React.DragEvent) => {
@@ -31,7 +32,7 @@ const List = ({ items, onItemDrop }: ListProps) => {
     const droppedItem: ProjectInput = JSON.parse(
       event.dataTransfer.getData("application/json"),
     );
-    onItemDrop(droppedItem);
+    onItemDrop(droppedItem, targetList);
   };
 
   return (
