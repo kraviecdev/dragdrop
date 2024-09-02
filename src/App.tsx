@@ -12,7 +12,17 @@ const App: React.FC = () => {
     setProjects((prev) => [...prev, data]);
   };
 
-  const handleItemDrop = (item: ProjectInput) => {
+  const handleItemDrop = (
+    item: ProjectInput,
+    targetList: "active" | "finished",
+  ) => {
+    // check in which list project currently is
+    const currentList = item.isActive ? "active" : "finished";
+
+    if (currentList === targetList) {
+      return;
+    }
+
     //Find project index
     const projectIndex = projects.findIndex(
       (project) => project.id === item.id,
@@ -39,12 +49,14 @@ const App: React.FC = () => {
       <Section modifier="active">
         <List
           onItemDrop={handleItemDrop}
+          targetList="active"
           items={projects.filter((project: ProjectInput) => project.isActive)}
         />
       </Section>
       <Section modifier="finished">
         <List
           onItemDrop={handleItemDrop}
+          targetList="finished"
           items={projects.filter((project: ProjectInput) => !project.isActive)}
         />
       </Section>
