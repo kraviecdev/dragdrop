@@ -1,4 +1,4 @@
-import { Validatable } from "./types.ts";
+import { Validatable } from "./interfaces.ts";
 
 const validate = (validatableInput: Validatable) => {
   let isValid = true;
