@@ -1,30 +1,23 @@
-import React, { forwardRef, Ref } from "react";
+import React from "react";
+import { InputI } from "../../../_utils/interfaces.ts";
 import "./formInput.css";
 
-type InputHTMLParams = React.InputHTMLAttributes<HTMLInputElement>;
-type TextareaHTMLParams = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+const FormInput = <T extends HTMLInputElement & HTMLTextAreaElement>({
+  htmlFor,
+  label,
+  value,
+  params,
+  textarea,
+  onValueChange,
+}: InputI) => {
+  const [inputVal, setInputVal] = React.useState(value);
 
-interface BaseInputProps {
-  htmlFor: string;
-  label: string;
-}
+  const handleChange = (e: React.ChangeEvent<T>) => {
+    const value = e.target.value;
+    setInputVal(value);
+    onValueChange(value);
+  };
 
-interface TextareaProps extends BaseInputProps {
-  textarea: true;
-  params: TextareaHTMLParams;
-}
-
-interface InputProps extends BaseInputProps {
-  textarea?: false;
-  params: InputHTMLParams;
-}
-
-type FormInputProps = TextareaProps | InputProps;
-
-const FormInput = forwardRef<
-  HTMLTextAreaElement | HTMLInputElement,
-  FormInputProps
->(({ htmlFor, label, textarea, params }, ref) => {
   return (
     <div className="form-control">
       <label htmlFor={htmlFor} className="form-label">
@@ -33,14 +26,20 @@ const FormInput = forwardRef<
       {textarea ? (
         <textarea
           id={htmlFor}
-          ref={ref as Ref<HTMLTextAreaElement>}
+          value={inputVal}
+          onChange={handleChange}
           {...params}
         />
       ) : (
-        <input id={htmlFor} ref={ref as Ref<HTMLInputElement>} {...params} />
+        <input
+          id={htmlFor}
+          value={inputVal}
+          onChange={handleChange}
+          {...params}
+        />
       )}
     </div>
   );
-});
+};
 
 export default FormInput;
