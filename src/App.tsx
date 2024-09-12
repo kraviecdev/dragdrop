@@ -1,25 +1,29 @@
 import React from "react";
-import { ProjectInput } from "./_utils/interfaces.ts";
+import { ProjectInput, Data, SectionInput } from "./_utils/types.ts";
+import { projectInputs, sectionInputs } from "./_utils/inputs.ts";
 import Form from "./_components/Form";
 import Section from "./_components/Section";
 import List from "./_components/List";
 import "./App.css";
 
 const App: React.FC = () => {
+  const [sections, setSections] = React.useState<SectionInput[]>([]);
   const [projects, setProjects] = React.useState<ProjectInput[]>([]);
 
-  const handleFormData = (data: ProjectInput) => {
-    setProjects((prev) => [...prev, data]);
+  const handleFormSubmit = (data: Data) => {
+    if (data) {
+      if (data.description) {
+        const newProject = new ProjectInput(data);
+        setProjects((prev) => [...prev, newProject]);
+      } else {
+        const newSection = new SectionInput(data);
+        setSections((prev) => [...prev, newSection]);
+      }
+    }
   };
 
-  const handleItemDrop = (
-    item: ProjectInput,
-    targetList: "active" | "finished",
-  ) => {
-    // check in which list project currently is
-    const currentList = item.isActive ? "active" : "finished";
-
-    if (currentList === targetList) {
+  const handleItemDrop = (item: ProjectInput, targetSection: string) => {
+    if (item.section === targetSection) {
       return;
     }
 
@@ -35,7 +39,7 @@ const App: React.FC = () => {
       //select project with found index, copy it and change isActive
       updatedProjects[projectIndex] = {
         ...updatedProjects[projectIndex],
-        isActive: !updatedProjects[projectIndex].isActive,
+        section: targetSection,
       };
 
       //state update
@@ -45,21 +49,28 @@ const App: React.FC = () => {
 
   return (
     <main>
-      <Form onFormSubmit={handleFormData} />
-      <Section modifier="active">
-        <List
-          onItemDrop={handleItemDrop}
-          targetList="active"
-          items={projects.filter((project: ProjectInput) => project.isActive)}
-        />
-      </Section>
-      <Section modifier="finished">
-        <List
-          onItemDrop={handleItemDrop}
-          targetList="finished"
-          items={projects.filter((project: ProjectInput) => !project.isActive)}
-        />
-      </Section>
+      <Form
+        onFormSubmit={handleFormSubmit}
+        formInputs={sectionInputs}
+        buttonName="Add Section"
+      />
+      <Form
+        onFormSubmit={handleFormSubmit}
+        formInputs={projectInputs}
+        buttonName="Add Project"
+      />
+      {sections.length > 0 &&
+        sections.map((section, index) => (
+          <Section key={index} modifier={section.title}>
+            <List
+              onItemDrop={handleItemDrop}
+              targetList={section.title}
+              items={projects.filter(
+                (project: ProjectInput) => project.section === section.title,
+              )}
+            />
+          </Section>
+        ))}
     </main>
   );
 };
