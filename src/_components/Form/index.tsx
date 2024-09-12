@@ -1,110 +1,94 @@
-import React, { useRef } from "react";
-import { nanoid } from "nanoid";
+import React from "react";
 import "./form.css";
-import FormInput from "./FormInput";
 import Button from "./Button";
-import { ProjectInput, Validatable } from "../../_utils/interfaces.ts";
+import FormInput from "./FormInput";
+import { InputI, Data, Validatable } from "../../_utils/types.ts";
 import { validate } from "../../_utils/validate.ts";
 
 interface FormProps {
-  onFormSubmit: (data: ProjectInput) => void;
+  onFormSubmit: (data: Data) => void;
+  formInputs: InputI[];
+  buttonName: string;
 }
 
-const Form: React.FC<FormProps> = ({ onFormSubmit }) => {
-  const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const peopleRef = useRef<HTMLInputElement>(null);
-
+const Form = ({ onFormSubmit, formInputs, buttonName }: FormProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
     const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const formValues = Object.fromEntries(formData);
 
-    const titleVal = titleRef.current!.value;
-    const descriptionVal = descriptionRef.current!.value;
-    const peopleVal = parseInt(peopleRef.current!.value, 10);
+    const title = (formValues.title as string) || undefined;
+    const description = (formValues.description as string) || undefined;
+    const people = Number(formValues.people as string) || undefined;
 
-    const titleValidatable: Validatable = {
-      value: titleVal,
-      required: true,
-    };
-
-    const descriptionValidatable: Validatable = {
-      value: descriptionVal,
-      required: true,
-      minLength: 5,
-    };
-
-    const peopleValidatable: Validatable = {
-      value: peopleVal,
-      required: true,
-      min: 0,
-      max: 10,
-    };
-
-    if (
-      !validate(titleValidatable) ||
-      !validate(descriptionValidatable) ||
-      !validate(peopleValidatable)
-    ) {
-      alert("Please enter Valid input");
-      return;
-    } else {
-      const newProject: ProjectInput = {
-        id: nanoid(),
-        title: titleVal.trim(),
-        description: descriptionVal.trim(),
-        people: peopleVal,
-        isActive: true,
+    if (title !== undefined) {
+      const titleValidation: Validatable = {
+        value: title,
+        required: true,
+        minLength: 3,
+        maxLength: 16,
       };
 
-      onFormSubmit(newProject);
+      if (!validate(titleValidation)) {
+        alert(`Title must have at least 3 characters, max 16 characters`);
+        return;
+      }
     }
 
+    if (description !== undefined) {
+      const descriptionValidation: Validatable = {
+        value: description,
+        required: true,
+        minLength: 5,
+        maxLength: 256,
+      };
+
+      if (!validate(descriptionValidation)) {
+        alert("Description must have at least 5 characters");
+        return;
+      }
+    }
+
+    if (people !== undefined) {
+      const peopleValidation: Validatable = {
+        value: people,
+        required: true,
+        min: 1,
+        max: 10,
+      };
+
+      if (!validate(peopleValidation)) {
+        alert("You have to assign at least 1 person per project");
+        return;
+      }
+    }
+
+    const formDataObject = {
+      title: title,
+      description: description ? description : undefined,
+      people: people ? people : undefined,
+    };
+
+    onFormSubmit(formDataObject);
     form.reset();
   };
 
   return (
     <form id="user-input" onSubmit={handleSubmit}>
-      <FormInput
-        htmlFor="title"
-        label="Title"
-        ref={titleRef}
-        params={{
-          type: "text",
-          id: "title",
-          placeholder: "Name your task",
-        }}
-      />
-
-      <FormInput
-        htmlFor="description"
-        label="Description"
-        textarea={true}
-        ref={descriptionRef}
-        params={{
-          id: "description",
-          rows: 3,
-          placeholder: "Enter description",
-        }}
-      />
-
-      <FormInput
-        htmlFor="people"
-        label="People"
-        ref={peopleRef}
-        params={{
-          id: "people",
-          type: "number",
-          step: 1,
-          min: 0,
-          max: 10,
-          defaultValue: 0,
-        }}
-      />
-
-      <Button name="ADD PROJECT" />
+      {formInputs.length > 0 &&
+        formInputs.map((input, index) => (
+          <FormInput
+            key={index}
+            name={input.name}
+            textarea={input.textarea}
+            value={input.value}
+            params={input.params}
+          />
+        ))}
+      <Button name={buttonName} />
     </form>
   );
 };
