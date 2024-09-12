@@ -1,12 +1,12 @@
-import { ProjectInput } from "../../_utils/interfaces.ts";
+import { ProjectInput } from "../../_utils/types.ts";
 import ListItem from "./ListItem";
 import "./list.css";
 import React, { useState } from "react";
 
 interface ListProps {
   items: ProjectInput[];
-  onItemDrop: (item: ProjectInput, targetList: "active" | "finished") => void;
-  targetList: "active" | "finished";
+  onItemDrop: (item: ProjectInput, targetList: string) => void;
+  targetList: string;
 }
 
 const List = ({ items, onItemDrop, targetList }: ListProps) => {
