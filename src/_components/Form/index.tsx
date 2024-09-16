@@ -8,10 +8,18 @@ import { validate } from "../../_utils/validate.ts";
 interface FormProps {
   onFormSubmit: (data: Data) => void;
   formInputs: InputI[];
-  buttonName: string;
+  buttonAddNew: string;
+  buttonSubmit: string;
 }
 
-const Form = ({ onFormSubmit, formInputs, buttonName }: FormProps) => {
+const Form = ({
+  onFormSubmit,
+  formInputs,
+  buttonAddNew,
+  buttonSubmit,
+}: FormProps) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -74,22 +82,31 @@ const Form = ({ onFormSubmit, formInputs, buttonName }: FormProps) => {
 
     onFormSubmit(formDataObject);
     form.reset();
+    setIsOpen(false);
   };
 
   return (
-    <form id="user-input" onSubmit={handleSubmit}>
-      {formInputs.length > 0 &&
-        formInputs.map((input, index) => (
-          <FormInput
-            key={index}
-            name={input.name}
-            textarea={input.textarea}
-            value={input.value}
-            params={input.params}
-          />
-        ))}
-      <Button name={buttonName} />
-    </form>
+    <div
+      className={"wrapper " + `${isOpen ? "wrapper--open" : "wrapper--closed"}`}
+    >
+      {!isOpen ? (
+        <Button name={buttonAddNew} onClick={() => setIsOpen(true)} />
+      ) : (
+        <form className="form" id="user-input" onSubmit={handleSubmit}>
+          {formInputs.length > 0 &&
+            formInputs.map((input, index) => (
+              <FormInput
+                key={index}
+                name={input.name}
+                textarea={input.textarea}
+                value={input.value}
+                params={input.params}
+              />
+            ))}
+          <Button type="submit" name={buttonSubmit} />
+        </form>
+      )}
+    </div>
   );
 };
 
