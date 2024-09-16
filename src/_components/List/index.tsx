@@ -40,7 +40,9 @@ const List = ({ items, onItemDrop, targetList }: ListProps) => {
       onDrop={onDrop}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
-      className={draggedOver ? "droppable" : ""}
+      className={
+        "list list--droppable " + `${draggedOver ? "list--drop " : ""}`
+      }
     >
       {items.length > 0 &&
         items.map((item: ProjectInput, id: number) => (
