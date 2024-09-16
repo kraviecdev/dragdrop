@@ -49,19 +49,15 @@ const App: React.FC = () => {
 
   return (
     <main>
-      <Form
-        onFormSubmit={handleFormSubmit}
-        formInputs={sectionInputs}
-        buttonName="Add Section"
-      />
-      <Form
-        onFormSubmit={handleFormSubmit}
-        formInputs={projectInputs}
-        buttonName="Add Project"
-      />
       {sections.length > 0 &&
         sections.map((section, index) => (
-          <Section key={index} modifier={section.title}>
+          <Section key={index} name={section.title}>
+            <Form
+              onFormSubmit={handleFormSubmit}
+              formInputs={projectInputs}
+              buttonAddNew="+ add new project"
+              buttonSubmit="submit new project"
+            />
             <List
               onItemDrop={handleItemDrop}
               targetList={section.title}
@@ -71,6 +67,12 @@ const App: React.FC = () => {
             />
           </Section>
         ))}
+      <Form
+        onFormSubmit={handleFormSubmit}
+        formInputs={sectionInputs}
+        buttonAddNew="+ Add New Section"
+        buttonSubmit="submit section"
+      />
     </main>
   );
 };
