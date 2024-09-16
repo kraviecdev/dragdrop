@@ -22,6 +22,7 @@ export interface Data {
   title?: string;
   description?: string;
   people?: number;
+  sectionName?: string;
 }
 
 export class ProjectInput {
@@ -36,7 +37,7 @@ export class ProjectInput {
     this.title = data.title || "";
     this.description = data.description || "";
     this.people = data.people || 0;
-    this.section = "active";
+    this.section = data.sectionName || "";
   }
 }
 
