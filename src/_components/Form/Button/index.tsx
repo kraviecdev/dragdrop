@@ -2,12 +2,13 @@ import "./button.css";
 
 interface ButtonProps {
   name: string;
-  disabled?: boolean;
+  type?: "submit" | "reset" | "button";
+  onClick?: () => void;
 }
 
-const Button = ({ disabled, name }: ButtonProps) => {
+const Button = ({ name, type, onClick }: ButtonProps) => {
   return (
-    <button type="submit" disabled={disabled}>
+    <button type={type} onClick={onClick}>
       {name}
     </button>
   );
