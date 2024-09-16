@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   const handleFormSubmit = (data: Data) => {
     if (data) {
-      if (data.description) {
+      if (data.sectionName) {
         const newProject = new ProjectInput(data);
         setProjects((prev) => [...prev, newProject]);
       } else {
@@ -57,6 +57,7 @@ const App: React.FC = () => {
               formInputs={projectInputs}
               buttonAddNew="+ add new project"
               buttonSubmit="submit new project"
+              sectionName={section.title}
             />
             <List
               onItemDrop={handleItemDrop}
