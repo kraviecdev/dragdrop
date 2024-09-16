@@ -3,14 +3,14 @@ import "./section.css";
 
 interface SectionProps {
   children: React.ReactNode;
-  modifier?: string;
+  name: string;
 }
 
-const Section = ({ children, modifier }: SectionProps) => {
+const Section = ({ children, name }: SectionProps) => {
   return (
-    <section className={`section ${modifier && "section--" + modifier}`}>
+    <section className="section">
       <header>
-        <h2>{`${modifier}  projects`}</h2>
+        <h2>{name}</h2>
       </header>
       {children}
     </section>
