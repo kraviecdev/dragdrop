@@ -10,6 +10,7 @@ interface FormProps {
   formInputs: InputI[];
   buttonAddNew: string;
   buttonSubmit: string;
+  sectionName?: string;
 }
 
 const Form = ({
@@ -17,6 +18,7 @@ const Form = ({
   formInputs,
   buttonAddNew,
   buttonSubmit,
+  sectionName,
 }: FormProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -78,6 +80,7 @@ const Form = ({
       title: title,
       description: description ? description : undefined,
       people: people ? people : undefined,
+      sectionName: sectionName ? sectionName : undefined,
     };
 
     onFormSubmit(formDataObject);
