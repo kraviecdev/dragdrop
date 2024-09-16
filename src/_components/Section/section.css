@@ -1,13 +1,18 @@
 .section {
-    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
     border: 1px solid;
+    border-color: var(--main-background);
+    height: max-content;
 }
 
 .section header {
-    height: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 12px 0;
+    background-color: var(--main-background);
 }
 
 .section header h2 {
@@ -16,34 +21,7 @@
     text-transform: uppercase;
 }
 
-.section--active {
-    border-color: #ff0062;
-}
-
-.section--active header {
-    background: #ff0062;
-}
-
-.section--active li h2 {
-    color: #ff0062;
-}
-
-.section--active ul.droppable {
-    background: #ffe3ee;
-}
-
-.section--finished {
-    border-color: #0044ff;
-}
-
-.section--finished header {
-    background: #0044ff;
-}
-
-.section--finished li h2 {
-    color: #0044ff;
-}
-
-.section--finished ul.droppable {
-    background: #d6e1ff;
+.section li h2 {
+    text-transform: capitalize;
+    color: var(--main-background);
 }
