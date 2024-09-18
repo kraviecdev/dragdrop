@@ -48,33 +48,37 @@ const App: React.FC = () => {
   };
 
   return (
-    <main>
-      {sections.length > 0 &&
-        sections.map((section, index) => (
-          <Section key={index} name={section.title}>
-            <Form
-              onFormSubmit={handleFormSubmit}
-              formInputs={projectInputs}
-              buttonAddNew="+ add new project"
-              buttonSubmit="submit new project"
-              sectionName={section.title}
-            />
-            <List
-              onItemDrop={handleItemDrop}
-              targetList={section.title}
-              items={projects.filter(
-                (project: ProjectInput) => project.section === section.title,
-              )}
-            />
-          </Section>
-        ))}
-      <Form
-        onFormSubmit={handleFormSubmit}
-        formInputs={sectionInputs}
-        buttonAddNew="+ Add New Section"
-        buttonSubmit="submit section"
-      />
-    </main>
+    <>
+      <h1>Drag & Drop Task Organizer</h1>
+
+      <main>
+        {sections.length > 0 &&
+          sections.map((section, index) => (
+            <Section key={index} name={section.title}>
+              <Form
+                onFormSubmit={handleFormSubmit}
+                formInputs={projectInputs}
+                buttonAddNew="+ add new project"
+                buttonSubmit="submit new project"
+                sectionName={section.title}
+              />
+              <List
+                onItemDrop={handleItemDrop}
+                targetList={section.title}
+                items={projects.filter(
+                  (project: ProjectInput) => project.section === section.title,
+                )}
+              />
+            </Section>
+          ))}
+        <Form
+          onFormSubmit={handleFormSubmit}
+          formInputs={sectionInputs}
+          buttonAddNew="+ Add New Section"
+          buttonSubmit="submit section"
+        />
+      </main>
+    </>
   );
 };
 
