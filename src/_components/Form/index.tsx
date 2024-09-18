@@ -1,6 +1,6 @@
 import React from "react";
 import "./form.css";
-import Button from "./Button";
+import Button from "../Button";
 import FormInput from "./FormInput";
 import { InputI, Data, Validatable } from "../../_utils/types.ts";
 import { validate } from "../../_utils/validate.ts";
