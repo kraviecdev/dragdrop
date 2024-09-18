@@ -1,7 +1,7 @@
 .section {
     display: flex;
     flex-direction: column;
-    margin: 16px;
+    margin: 8px;
     border: 1px solid;
     border-color: var(--main-background);
     height: max-content;
@@ -17,7 +17,7 @@
 
 .section header h2 {
     margin: 0;
-    color: white;
+    color: var(--main-color);
     text-transform: uppercase;
 }
 

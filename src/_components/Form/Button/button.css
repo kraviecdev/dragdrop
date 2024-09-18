@@ -1,13 +1,14 @@
 button {
     font: inherit;
-    background: #ff0062;
-    border: 1px solid #ff0062;
+    background: var(--button-primary);
+    border: 1px solid;
     border-radius: 3px;
     text-transform: capitalize;
     cursor: pointer;
     color: white;
     padding: 12px 24px;
     max-width: max-content;
+    transition: all .4s ease-in-out;
 }
 
 button:focus {
@@ -16,6 +17,5 @@ button:focus {
 
 button:hover,
 button:active {
-    background: #a80041;
-    border-color: #a80041;
+    background: var(--button-primary-hover);
 }

@@ -11,5 +11,5 @@
 
 .list--drop {
     border: 1px dashed;
-    background-color: var(--droppable-hover);
+    background-color: var(--secondary-background);
 }
