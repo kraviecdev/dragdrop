@@ -92,23 +92,24 @@ const Form = ({
     <div
       className={"wrapper " + `${isOpen ? "wrapper--open" : "wrapper--closed"}`}
     >
-      {!isOpen ? (
-        <Button name={buttonAddNew} onClick={() => setIsOpen(true)} />
-      ) : (
-        <form className="form" id="user-input" onSubmit={handleSubmit}>
-          {formInputs.length > 0 &&
-            formInputs.map((input, index) => (
-              <FormInput
-                key={index}
-                name={input.name}
-                textarea={input.textarea}
-                value={input.value}
-                params={input.params}
-              />
-            ))}
-          <Button type="submit" name={buttonSubmit} />
-        </form>
-      )}
+      <Button
+        name={isOpen ? "Close form" : buttonAddNew}
+        onClick={() => setIsOpen(!isOpen)}
+      />
+
+      <form className="form" id="user-input" onSubmit={handleSubmit}>
+        {formInputs.length > 0 &&
+          formInputs.map((input, index) => (
+            <FormInput
+              key={index}
+              name={input.name}
+              textarea={input.textarea}
+              value={input.value}
+              params={input.params}
+            />
+          ))}
+        <Button type="submit" name={buttonSubmit} />
+      </form>
     </div>
   );
 };
