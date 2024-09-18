@@ -12,17 +12,30 @@ body {
 }
 
 :root {
-  --main-color: #ffffff;
-  --main-background: #0044ff;
-  --button-primary: #ff0062;
-  --button-primary-hover: #ff0062;
-  --button-primary-active: #ff0062;
-  --droppable-hover: #d6e1ff;
+  --main-color: #ededed;
+  --secondary-color: #83756e;
+  --main-background: #202020;
+  --secondary-background: #fbd9ac;
+  --button-primary: #ff6a00;
+  --button-primary-hover: #d15901;
+}
+
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  max-width: 1024px;
-  margin: 0 auto;
+  flex-grow: 1;
+}
+
+h1 {
+  text-transform: capitalize;
+  font-style: italic;
+  font-size: 42px;
+  padding: 0 8px;
 }
