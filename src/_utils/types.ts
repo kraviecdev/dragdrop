@@ -29,15 +29,13 @@ export class ProjectInput {
   id: string;
   title: string;
   description: string;
-  people: number;
   section: string;
 
   constructor(data: Data) {
     this.id = nanoid();
-    this.title = data.title || "";
-    this.description = data.description || "";
-    this.people = data.people || 0;
-    this.section = data.sectionName || "";
+    this.title = data.title!;
+    this.description = data.description!;
+    this.section = data.sectionName!;
   }
 }
 
@@ -48,7 +46,7 @@ export class SectionInput {
 
   constructor(data: Data) {
     this.id = nanoid();
-    this.title = data.title || "";
+    this.title = data.title!;
     this.projects = [];
   }
 }
