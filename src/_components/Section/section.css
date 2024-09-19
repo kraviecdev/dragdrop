@@ -5,6 +5,7 @@
     border: 1px solid;
     border-color: var(--main-background);
     height: max-content;
+    position: relative;
 }
 
 .section header {
