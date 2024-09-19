@@ -24,18 +24,6 @@ export const projectInputs: InputI[] = [
     },
     textarea: true,
   },
-  {
-    name: "people",
-    value: 0,
-    params: {
-      required: true,
-      min: 1,
-      max: 10,
-      type: "number",
-      step: 1,
-    },
-    textarea: false,
-  },
 ];
 
 export const sectionInputs: InputI[] = [
