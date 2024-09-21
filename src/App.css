@@ -18,6 +18,7 @@ body {
   --secondary-background: #fbd9ac;
   --button-primary: #ff6a00;
   --button-primary-hover: #d15901;
+  --error: #cc0909;
 }
 
 #root {
