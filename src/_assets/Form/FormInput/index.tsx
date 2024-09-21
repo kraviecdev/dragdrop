@@ -10,7 +10,7 @@ const FormInput = ({
   errorMessage,
 }: InputI) => {
   return (
-    <div className="form-control">
+    <div className={`form-control ${errorMessage && "form-control--error"}`}>
       <label htmlFor={name} className="form-label">
         {name}
       </label>

@@ -14,6 +14,20 @@
     text-transform: capitalize;
 }
 
+.form-control--error label {
+    color: var(--error);
+}
+
+.form-control--error input, textarea {
+    border-color: var(--error);
+}
+
+.form-control p {
+    color: var(--error);
+    font-size: 12px;
+    font-style: italic;
+}
+
 input,
 textarea {
     font: inherit;
