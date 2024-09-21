@@ -1,10 +1,11 @@
 import "./button.css";
+import React from "react";
 
 interface ButtonProps {
   name: string;
   className?: string;
   type?: "submit" | "reset" | "button";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({ name, className, type, onClick }: ButtonProps) => {

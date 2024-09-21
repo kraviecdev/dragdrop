@@ -1,20 +1,14 @@
-import React from "react";
 import { InputI } from "../../../_utils/types.ts";
 import "./formInput.css";
 
-const FormInput = <T extends HTMLInputElement & HTMLTextAreaElement>({
+const FormInput = ({
   name,
   value,
   params,
   textarea,
+  handleChange,
+  errorMessage,
 }: InputI) => {
-  const [inputVal, setInputVal] = React.useState(value);
-
-  const handleChange = (e: React.ChangeEvent<T>) => {
-    const value = e.target.value;
-    setInputVal(value);
-  };
-
   return (
     <div className="form-control">
       <label htmlFor={name} className="form-label">
@@ -24,7 +18,7 @@ const FormInput = <T extends HTMLInputElement & HTMLTextAreaElement>({
         <textarea
           id={name}
           name={name}
-          value={inputVal}
+          value={value}
           onChange={handleChange}
           {...params}
         />
@@ -32,11 +26,12 @@ const FormInput = <T extends HTMLInputElement & HTMLTextAreaElement>({
         <input
           id={name}
           name={name}
-          value={inputVal}
+          value={value}
           onChange={handleChange}
           {...params}
         />
       )}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };
