@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import React from "react";
 
 export interface Validatable {
   value: string | number;
@@ -16,37 +17,39 @@ export interface InputI {
     [key: string]: number | string | boolean;
   };
   textarea: boolean;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  errorMessage?: string;
 }
 
 export interface Data {
   title?: string;
   description?: string;
   people?: number;
-  sectionName?: string;
+  sectionId?: string;
 }
 
 export class ProjectInput {
   id: string;
   title: string;
   description: string;
-  section: string;
+  sectionId: string;
 
   constructor(data: Data) {
     this.id = nanoid();
     this.title = data.title!;
     this.description = data.description!;
-    this.section = data.sectionName!;
+    this.sectionId = data.sectionId!;
   }
 }
 
 export class SectionInput {
   id: string;
   title: string;
-  projects: [];
 
   constructor(data: Data) {
     this.id = nanoid();
     this.title = data.title!;
-    this.projects = [];
   }
 }
