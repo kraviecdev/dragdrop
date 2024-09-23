@@ -8,9 +8,10 @@ import { Validatable, Data } from "../../_utils/types.ts";
 interface AddFormProps {
   onFormSubmit: (data: Data) => void;
   project: boolean;
+  sectionId?: string;
 }
 
-const AddForm = ({ onFormSubmit, project }: AddFormProps) => {
+const AddForm = ({ onFormSubmit, project, sectionId }: AddFormProps) => {
   const initialState = {
     value: "",
     errorMessage: "",
@@ -74,6 +75,7 @@ const AddForm = ({ onFormSubmit, project }: AddFormProps) => {
     const data: Data = {
       description: descValue?.value,
       title: titleValue?.value,
+      sectionId: sectionId,
     };
 
     onFormSubmit(data);
