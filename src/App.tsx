@@ -1,9 +1,8 @@
 import React from "react";
 import { ProjectInput, Data, SectionInput } from "./_utils/types.ts";
-import { projectInputs, sectionInputs } from "./_utils/inputs.ts";
-import Form from "./_components/Form";
-import Section from "./_components/Section";
-import List from "./_components/List";
+import Section from "./_assets/Section";
+import ProjectsList from "./_components/ProjectsList";
+import AddForm from "./_components/AddForm";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -12,18 +11,52 @@ const App: React.FC = () => {
 
   const handleFormSubmit = (data: Data) => {
     if (data) {
-      if (data.sectionName) {
+      if (data.sectionId) {
         const newProject = new ProjectInput(data);
+
         setProjects((prev) => [...prev, newProject]);
       } else {
+        if (
+          sections.some(
+            (section) =>
+              section.title.toUpperCase() === data.title!.toUpperCase(),
+          )
+        ) {
+          alert("This section already exists");
+          return;
+        }
+
         const newSection = new SectionInput(data);
         setSections((prev) => [...prev, newSection]);
       }
     }
   };
 
-  const handleItemDrop = (item: ProjectInput, targetSection: string) => {
-    if (item.section === targetSection) {
+  const deleteSection = (id: string) => {
+    const sectionIndex = sections.findIndex((section) => section.id === id);
+
+    const sectionsAfterDel = [
+      ...sections.slice(0, sectionIndex),
+      ...sections.slice(sectionIndex + 1),
+    ];
+
+    setSections(sectionsAfterDel);
+    setProjects((prev) => prev.filter((project) => project.sectionId !== id));
+  };
+
+  const deleteItem = (id: string) => {
+    const projectIndex = projects.findIndex((project) => project.id === id);
+
+    const projectsAfterDel = [
+      ...projects.slice(0, projectIndex),
+      ...projects.slice(projectIndex + 1),
+    ];
+
+    setProjects(projectsAfterDel);
+  };
+
+  const handleItemDrop = (item: ProjectInput, sectionId: string) => {
+    if (item.sectionId === sectionId) {
       return;
     }
 
@@ -33,17 +66,15 @@ const App: React.FC = () => {
     );
 
     if (projectIndex !== -1) {
-      //copy projects
-      const updatedProjects = [...projects];
-
-      //select project with found index, copy it and change isActive
-      updatedProjects[projectIndex] = {
-        ...updatedProjects[projectIndex],
-        section: targetSection,
-      };
-
       //state update
-      setProjects(updatedProjects);
+      setProjects((prev) => [
+        ...prev.slice(0, projectIndex),
+        {
+          ...projects[projectIndex],
+          sectionId: sectionId,
+        },
+        ...prev.slice(projectIndex + 1),
+      ]);
     }
   };
 
@@ -54,29 +85,27 @@ const App: React.FC = () => {
       <main>
         {sections.length > 0 &&
           sections.map((section, index) => (
-            <Section key={index} name={section.title}>
-              <Form
+            <Section
+              onClickHandler={() => deleteSection(section.id)}
+              key={index}
+              name={section.title}
+            >
+              <AddForm
                 onFormSubmit={handleFormSubmit}
-                formInputs={projectInputs}
-                buttonAddNew="+ add new project"
-                buttonSubmit="submit new project"
-                sectionName={section.title}
+                project={true}
+                sectionId={section.id}
               />
-              <List
+              <ProjectsList
                 onItemDrop={handleItemDrop}
-                targetList={section.title}
+                sectionId={section.id}
                 items={projects.filter(
-                  (project: ProjectInput) => project.section === section.title,
+                  (project: ProjectInput) => project.sectionId === section.id,
                 )}
+                deleteProject={deleteItem}
               />
             </Section>
           ))}
-        <Form
-          onFormSubmit={handleFormSubmit}
-          formInputs={sectionInputs}
-          buttonAddNew="+ Add New Section"
-          buttonSubmit="submit section"
-        />
+        <AddForm onFormSubmit={handleFormSubmit} project={false} />
       </main>
     </>
   );
