@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ProjectInput, Data, SectionInput } from "./_utils/types.ts";
 import Section from "./_assets/Section";
 import ProjectsList from "./_components/ProjectsList";
 import AddForm from "./_components/AddForm";
 import "./App.css";
+import {
+  getProjectsFromLocalStorage,
+  getSectionsFromLocalStorage,
+  saveLocalstorageProjects,
+  saveLocalstorageSections,
+} from "./_utils/localstorage.ts";
 
 const App: React.FC = () => {
-  const [sections, setSections] = React.useState<SectionInput[]>([]);
-  const [projects, setProjects] = React.useState<ProjectInput[]>([]);
+  const [sections, setSections] = React.useState<SectionInput[]>(
+    getSectionsFromLocalStorage(),
+  );
+  const [projects, setProjects] = React.useState<ProjectInput[]>(
+    getProjectsFromLocalStorage(),
+  );
 
   const handleFormSubmit = (data: Data) => {
     if (data) {
@@ -77,6 +87,11 @@ const App: React.FC = () => {
       ]);
     }
   };
+
+  useEffect(() => {
+    saveLocalstorageProjects(projects);
+    saveLocalstorageSections(sections);
+  }, [sections, projects]);
 
   return (
     <>
