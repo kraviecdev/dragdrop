@@ -1,4 +1,5 @@
 import React from "react";
+import "./list.css";
 
 interface ListProps {
   onDragOver: (event: React.DragEvent) => void;
