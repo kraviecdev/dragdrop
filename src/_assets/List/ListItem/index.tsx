@@ -1,23 +1,24 @@
 import "./listItem.css";
 import React from "react";
+import Button from "../../Button";
 
 interface ListItemProps {
   title: string;
   description: string;
-  people: number;
+  onClickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
   dragStartHandler?: (event: React.DragEvent) => void;
 }
 
 const ListItem = ({
   title,
   description,
-  people,
   dragStartHandler,
+  onClickHandler,
 }: ListItemProps) => {
   return (
     <li onDragStart={dragStartHandler} draggable>
+      <Button className="delete" name="&#10006;" onClick={onClickHandler} />
       <h2>{title}</h2>
-      <h3>{`${people} ${people === 1 ? "Person" : "Persons"} assigned`}</h3>
       <p>{description}</p>
     </li>
   );
