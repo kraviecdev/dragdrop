@@ -1,15 +1,21 @@
-import { ProjectInput } from "../../_utils/types.ts";
-import ListItem from "./ListItem";
-import "./list.css";
 import React, { useState } from "react";
+import { ProjectInput } from "../../_utils/types.ts";
+import ListItem from "../../_assets/List/ListItem";
+import List from "../../_assets/List";
 
-interface ListProps {
+interface ProjectsListProps {
   items: ProjectInput[];
   onItemDrop: (item: ProjectInput, targetList: string) => void;
-  targetList: string;
+  sectionId: string;
+  deleteProject: (id: string) => void;
 }
 
-const List = ({ items, onItemDrop, targetList }: ListProps) => {
+const ProjectsList = ({
+  items,
+  onItemDrop,
+  sectionId,
+  deleteProject,
+}: ProjectsListProps) => {
   const [draggedOver, setDraggedOver] = useState(false);
 
   const onDragOver = (event: React.DragEvent) => {
@@ -32,14 +38,14 @@ const List = ({ items, onItemDrop, targetList }: ListProps) => {
     const droppedItem: ProjectInput = JSON.parse(
       event.dataTransfer.getData("application/json"),
     );
-    onItemDrop(droppedItem, targetList);
+    onItemDrop(droppedItem, sectionId);
   };
 
   return (
-    <ul
-      onDrop={onDrop}
+    <List
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
+      onDrop={onDrop}
       className={
         "list list--droppable " + `${draggedOver ? "list--drop " : ""}`
       }
@@ -50,12 +56,12 @@ const List = ({ items, onItemDrop, targetList }: ListProps) => {
             key={id}
             title={item.title}
             description={item.description}
-            people={item.people}
             dragStartHandler={(event) => onDragStart(event, item)}
+            onClickHandler={() => deleteProject(item.id)}
           />
         ))}
-    </ul>
+    </List>
   );
 };
 
-export default List;
+export default ProjectsList;
