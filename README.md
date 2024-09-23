@@ -1,6 +1,7 @@
 # DragDrop
 
-DragDrop application is first training project made in TypeScript. Project created as a part of Maximilian Schwarzmüller Udemy course.
+DragDrop application is first training project made with TypeScript. 
+Project created as a part of Maximilian Schwarzmüller Udemy course.
 
 ## Table of contents
 1. [Demo](#demo)
@@ -9,21 +10,25 @@ DragDrop application is first training project made in TypeScript. Project creat
 4. [Available Scripts](#available-scripts)
 
 ## Demo
-Last application version
+Latest application version
 
 [DragDrop](https://kraviecdev.github.io/dragdrop/)
 
 ## General Information
-This project is just a TypeScript training. I tried to use in it most of the Types. It is not made for general use.
+Project represents my concept of Drag & Drop task organizer. It is implemented in React + Vite, uses localStorage to for saving data.
+It allows to name each section with User will. You can add more than 2 sections. Dragging works only at desktops.
 
 ## Tech stack
 
-- [x] CSS - Flex
+- [x] CSS - Flex, Grid, RWD
 - [x] HTML - Semantic & accessible HTML
+- [x] Immutability
 - [x] JavaScript (ES6+)
 - [x] Typescript 
 - [x] React
 - [x] React Hooks
+- [x] Local Storage
+- [x] Error handling
 - [x] GithubPages
 - [x] NPM
 - [x] This project was bootstrapped with [Vite](https://vitejs.dev/).
